@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block title %}OSIRIS Data{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>OSIRIS Data</h1>
+</div>
+<div data-collapse>
+    <h2>Datasets</h2>
+    <div id="datasets">
+      {% include "datasets/_datasets.html" %}
+    </div>
+    <h2>Observing Logs</h2>
+</div>
+{% endblock content %}

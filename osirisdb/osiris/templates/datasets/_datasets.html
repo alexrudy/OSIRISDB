@@ -1,0 +1,10 @@
+<div class='target-table'>
+  <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+    <thead>{% include "datasets/_dataset_header.html" %}</thead>
+    <tbody>
+    {% for dataset in datasets %}
+      {% include "datasets/_dataset_row.html" %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

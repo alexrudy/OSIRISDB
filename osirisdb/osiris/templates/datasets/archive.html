@@ -1,0 +1,23 @@
+{% from "datasets/_archive.html" import dataset_archive_link %}
+{% extends "index.html" %}
+{% block title %}Datasets from {{ date }}{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1><a href="{{ url_for('osiris.dataset') }}">Datasets</a> from {{ dataset_archive_link(year, month, day) }}</h1>
+      {% include "datasets/_datasets.html" %}
+      
+</div>
+  <h1><a href="{{ url_for('osiris.specframe') }}">Frames</a> from {{ dataset_archive_link(year, month, day) }}</h1>
+<div id="frames">
+    <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+      <thead>{% include "frames/_frame_header.html" %}</thead>
+      <tbody>
+    {% for dataset in datasets %}
+        {% for frame in dataset.sframes %}
+            {% include "frames/_frame_row.html" %}
+        {% endfor %}
+    {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock content %}

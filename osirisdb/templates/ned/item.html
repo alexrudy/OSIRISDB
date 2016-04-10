@@ -1,0 +1,6 @@
+{% extends "index.html" %}
+{% block title %}NED Info for {{ ned.name }}{% endblock title %}
+{% block content %}
+{% set neds = [ned] %}
+{% include "ned/_ned.html" %}
+{% endblock  %}

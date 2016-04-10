@@ -1,0 +1,15 @@
+<tr>
+  <td class='name'>
+    <a href="{{ url_for('.target', identifier=target.id)}}">{{ target.name }}</a>
+  </td>
+  <td class="dt-center">
+      {% if target.simbad[0] %}
+          {{ target.simbad[0].coordinates.to_string('hmsdms', sep=":") }}
+      {% endif %}
+  </td>
+  <td class="dt-right">
+      {% if target.ned[0] %}
+      {{ target.ned[0].redshift }}
+      {% endif %}
+  </td>
+</tr>

@@ -1,0 +1,15 @@
+<div style="width: 50%">
+    <table class='datatables-compact display compact' border="0" cellspacing="5" cellpadding="5">
+        <thead class='hidden'>
+            <tr><th>Label</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Name: </td><td>{{ simbad.name}}</td>
+            </tr>
+            <tr>
+                <td>Coordinates: </td><td>{{ simbad.coordinates.to_string('hmsdms', sep=":") }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

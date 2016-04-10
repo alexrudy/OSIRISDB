@@ -1,0 +1,31 @@
+{% from "datasets/_archive.html" import dataset_archive_link %}
+{% extends "index.html" %}
+{% block title %}Datasets{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1><a href="{{ url_for('.dataset', identifier=dataset.id)}}">Dataset #{{ dataset.number }}</a></h1>
+  <div class="metadata">
+      <div>
+          <span class="label">Identifier: </span><span class="value">{{ dataset_archive_link(dataset.date.year, dataset.date.month, dataset.date.day)}}
+          #{{ dataset.number}}</span>
+      </div>
+     <div>
+         <span class="label">Name from DDF: </span><span class="value">{{ dataset.dataset_name }}</span>
+     </div>
+     <div>
+         <span class="label">Targets: </span>
+         <span class="value">
+         {% for target in dataset.targets %}
+             {% if not loop.first %}, {% endif %}
+             <a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
+         {% endfor %}
+         </span>
+     </div>
+  </div>
+</div>
+<div id="frames">
+  <h2 id="frames">Frames</h2>
+  {% set frames = dataset.sframes %}
+  {% include "frames/_frames.html" %}
+</div>
+{% endblock content %}

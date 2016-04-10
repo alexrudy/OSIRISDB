@@ -1,0 +1,10 @@
+<div class='target-table'>
+  <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+    <thead>{% include "frames/_frame_header.html" %}</thead>
+    <tbody>
+    {% for frame in frames %}
+      {% include "frames/_frame_row.html" %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

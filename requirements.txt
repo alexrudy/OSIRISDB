@@ -1,0 +1,17 @@
+# Database
+sqlalchemy
+psycopg2
+
+# Scientific Python
+numpy
+matplotlib
+astropy
+astroquery
+h5py
+
+# Flask
+flask
+flask-sqlalchemy
+flask-scss
+flask-wtf
+Flask-Script

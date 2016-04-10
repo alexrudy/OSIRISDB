@@ -1,0 +1,41 @@
+a {
+    text-decoration: none
+}
+article {
+    margin: 0 20px
+}
+#article {
+}
+
+#name {
+    
+    text-decoration: underline;
+    
+    .telem {
+        color: #66FFEF;
+    }
+    .py {
+        color: white;
+    }
+}
+
+#navigation-bar {
+    
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0px 10px;
+    
+    div {
+        padding: 20px 10px;
+        float: left;
+        display: inline-block;
+        a, a:visited {
+            color: white;
+        }
+    }
+    
+    
+    
+}

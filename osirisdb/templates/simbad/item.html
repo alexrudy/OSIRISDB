@@ -1,0 +1,6 @@
+{% extends "index.html" %}
+{% block title %}SIMBAD Info for {{ simbad.name }}{% endblock title %}
+{% block content %}
+{% set simbads = [simbad] %}
+{% include "simbad/_simbad.html" %}
+{% endblock  %}

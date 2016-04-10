@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block title %}New Target{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>New Target</h1>
+</div>
+<div id="targets">
+  <form method="POST" action="/targets/new/">
+      {{ form.hidden_tag() }}
+      {{ form.name.label }} {{ form.name(size=20) }}
+      <input type="submit" value="Go">
+  </form>
+</div>
+{% endblock content %}

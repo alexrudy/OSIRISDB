@@ -1,0 +1,5 @@
+{% macro dataset_archive_link(year, month, day) -%}
+<a href="{{ url_for('osiris.dataset_archive', year=year )}}">{{ year }}</a>
+      {%- if month %}/<a href="{{ url_for('osiris.dataset_archive', year=year, month=month)}}">{{ "%02d"|format(month) }}</a>
+      {%- if day %}/<a href="{{ url_for('osiris.dataset_archive', year=year, month=month, day=day)}}">{{ "%02d"|format(day) }}</a>{%- endif %}{%- endif %}
+{%- endmacro %}

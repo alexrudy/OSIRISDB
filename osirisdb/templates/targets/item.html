@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block title %}Target {{ target.name }}{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>Target {{ target.name }}</h1>
+</div>
+<div data-collapse>
+<h2 class='open'>SIMBAD Info:</h2>
+<div id="simbad">
+    {% if target.simbad|length == 1 %}
+    {% set simbad = target.simbad[0] %}
+    {% include "simbad/_simbad_single.html" %}
+    {% elif target.simbad|length > 1 %}{% include "simbad/_simbad.html" %}{% else %}
+    <form method="post" action="/targets/{{ target.id }}/simbad/new/">
+        {{ simbad_form.hidden_tag() }}
+        {{ simbad_form.name.label }} {{ simbad_form.name(value=target.name) }}
+        <input type="submit" value="Lookup">
+    </form>
+    {% endif %}
+</div>
+<h2 class='open'>NED Info:</h2>
+<div id="ned">
+    {% if target.ned|length == 1 %}
+    {% set ned = target.ned[0] %}
+    {% include "ned/_ned_single.html" %}
+    {% elif target.ned|length > 1 %}{% include "ned/_ned.html" %}{% else %}
+    <h4>
+        Add NED Info:
+    </h4>
+    <form method="post" action="/targets/{{ target.id }}/ned/new/">
+        {{ ned_form.hidden_tag() }}
+        {{ ned_form.name.label }} {{ ned_form.name(value=target.name) }}
+        <input type="submit" value="Lookup">
+    </form>
+    {% endif %}
+</div>
+<h2>OSIRIS <a href="{{ url_for('osiris.dataset')}}">Datasets</a> for {{ target.name }}</h2>
+<div id="datasets" style="width: 800px">
+    {% set datasets = target.datasets %}
+    {% include "datasets/_datasets.html" %}
+</div>
+<h2>OSIRIS Spectrometer <a href="{{ url_for('osiris.specframe') }}">Frames</a> for {{ target.name }}</h2>
+<div id="frames">
+    <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+      <thead>{% include "frames/_frame_header.html" %}</thead>
+      <tbody>
+    {% for frame in target.osiris_spec_frames %}
+        {% include "frames/_frame_row.html" %}
+    {% endfor %}
+      </tbody>
+    </table>
+</div>
+</div>
+{% endblock content %}

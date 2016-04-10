@@ -1,0 +1,27 @@
+<div style="width: 800px">
+    {% if not simbads %}
+    {% set simbads = target.simbad %}
+    {% endif %}
+    <table class='datatables-compact display' border="0" cellspacing="5" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Coordinates</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for simbad in simbads  %}
+                <tr>
+                    <td><a href="{{ url_for('simbadinfo', identifier=simbad.id)}}">{{ simbad.name }}</td>
+                    <td class="dt-center">{{ simbad.coordinates.to_string('hmsdms', sep=":") }}</td>
+                    <td>
+                        <form method="PUT" action="/simbad/{{ simbad.id }}/delete/">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,3 @@
+*.p[co]
+__pycache__
+test.db

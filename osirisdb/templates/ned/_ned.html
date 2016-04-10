@@ -1,0 +1,31 @@
+<div class="nedinfo" style="width: 800px">
+    {% if not neds %}
+        {% set neds = target.ned %}
+    {% endif %}
+    <table class='datatables-compact display' border="0" cellspacing="5" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Kind</th>
+                <th>Redshift</th>
+                <th>Coordinates</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ned in neds %}
+                <tr>
+                    <td><a href="{{ url_for('nedinfo', identifier=ned.id )}}">{{ ned.name }}</a></td>
+                    <td>{{ ned.kind }}</td>
+                    <td class="dt-right">{{ ned.redshift }}</td>
+                    <td class="dt-center">{{ ned.coordinates.to_string('hmsdms', sep=":") }}</td>
+                    <td>
+                        <form method="PUT" action="/ned/{{ ned.id }}/delete/">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block title %}Frame #{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>Frame #<a href="{{ url_for('.dataset', identifier=frame.dataset.id )}}">{{ frame.dataset.number }}</a>-<a href="{{ url_for('.specframe', identifier=frame.id )}}">{{ frame.number }}</a> from {{ frame.dataset.date }}
+  </h1>
+  <div>
+      <table class='datatables-compact compact' border="0" cellspacing="5" cellpadding="5">
+          <thead>
+              {% include "frames/_frame_header.html" %}
+          </thead>
+          <tbody>
+              {% include "frames/_frame_row.html" %}
+          </tbody>
+      </table>
+  </div>
+
+</div>
+<div id="files">
+  <h2 id="files">Data Files</h2>
+  <table class='datatables-compact hover cell-border' border="0" cellspacing="5" cellpadding="5">
+      <thead>
+          <tr>
+              <th></th>
+              <th></th>
+              
+          </tr>
+      </thead>
+      <tbody>
+      {% for datafile in frame.dataframes %}
+          <tr>
+              <td>{{ datafile.basename }}</td>
+              <td>{{ datafile.host }}</td>
+              
+          </tr>
+      {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,36 @@
+    {% from "datasets/_archive.html" import dataset_archive_link %}
+<tr>
+    <td class='date'>
+          {{ dataset_archive_link(dataset.date.year, dataset.date.month, dataset.date.day) }}
+    </td>
+    <td class='number'>
+          <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.number }}</a>
+    </td>
+    <td class='name'>
+        <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.dataset_name }}</a>
+    </td>
+    <td class='name'>
+        {% for target in dataset.targets %}
+            {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
+        {% else %}
+        <form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/">
+            {{ select_target_form.hidden_tag() }}
+            {{ select_target_form.label }}{{ select_target_form.target() }}
+            <input type="submit" value="Add">
+        </form>
+        {% endfor %}
+    </td>
+    <td>
+        {% for group in dataset.sframes|groupby('filter') %}
+            {% if not loop.first %}, {% endif %}{{ group.grouper }}
+        {% endfor %}
+    </td>
+    <td>
+        {% for group in dataset.sframes|groupby('scale') %}
+            {% if not loop.first %}, {% endif %}{{ group.grouper }}&quot;/px
+        {% endfor %}
+    </td>
+    <td>
+        {{ "%.1f"|format((dataset.sframes|sum('integration_time'))) }}s (n={{dataset.sframes|count}})
+    </td>
+</tr>

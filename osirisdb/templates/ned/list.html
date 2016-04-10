@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block title %}NEDInfo Objects{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>NED Info</h1>
+</div>
+<div id="targets">
+  {% include "ned/_ned.html" %}
+</div>
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% from "datasets/_archive.html" import dataset_archive_link %}
+<tr>
+    <td class='date'>
+        {{ dataset_archive_link(frame.time.year, frame.time.month, frame.time.day)}}
+    </td>
+    <td class='date'>
+          {{ frame.time.strftime("%H:%M:%S") }}
+    </td>
+    <td class='number'>
+          #<a href={{ url_for('osiris.dataset', identifier=frame.dataset.id )}}>{{ frame.dataset.number }}</a>-<a href={{ url_for('osiris.specframe', identifier=frame.id )}}>{{ frame.number }}</a>
+    </td>
+    <td class='name'>
+        {% if frame.sky %}
+        Sky for
+        {% endif %}
+        <pre style="display: inline">{{ frame.object_name }}</pre>
+    </td>
+    <td class="exposure">
+        {{ "%.0f"|format(frame.integration_time) }}s
+        {% if frame.coadds > 1 %}
+        &times; {{ frame.coadds }}
+        {% endif %}
+    </td>
+    <td class="filter">
+        {{ frame.filter }}
+    </td>
+    <td class="scale">
+        {{ frame.scale }}&quot;/px
+    </td>
+    <td class="airmass">
+        {{ "%.1f"|format(frame.airmass) }}
+    </td>
+    <td class="pa">
+        {{ "%.0f"|format(frame.pa) }}&deg;
+    </td>
+    <td class="kind">
+        <pre style="display: inline">{{ frame.obstype }}</pre>
+    </td>
+    <td class="target dt-right">
+        {% if frame.target -%}
+        <form method="POST" action="{{ url_for('osiris.specframe', identifier=frame.id) }}/target/">
+            <a href="{{ url_for('target', identifier=frame.target.id)}}">{{ frame.target.name }}</a>
+            {{ select_target_form.hidden_tag() }}
+            {{ select_target_form.target(class='hidden') }}
+            <input type="submit" value="-">
+        </form>
+        {%- else -%}
+        <form method="POST" action="{{ url_for('osiris.specframe', identifier=frame.id) }}/target/">
+            {{ select_target_form.hidden_tag() }}
+            {{ select_target_form.target() }}
+            <input type="submit" value="+">
+        </form>
+        {%- endif %}
+
+    </td>
+</tr>
