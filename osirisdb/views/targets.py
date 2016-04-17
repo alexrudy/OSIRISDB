@@ -78,7 +78,7 @@ class SelectTarget(Form):
     def __init__(self):
         super(SelectTarget, self).__init__()
         self.prev.data = request.referrer
-        self.target.choices = [(-1, "")] + [(t.id, t.name) for t in Target.query.all()]
+        self.target.choices = [(-1, "")] + [(t.id, t.name) for t in Target.query.order_by(Target.name).all()]
         
     
 

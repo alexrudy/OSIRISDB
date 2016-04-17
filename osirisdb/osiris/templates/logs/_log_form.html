@@ -1,0 +1,28 @@
+  {{ form.hidden_tag() }}
+  <div class="float-left">
+      <table>
+          <tr>
+              <th>{{ form.date.label(text="UT Date") }}</th>
+              <td>{{ form.date }}</td>
+              <th>{{ form.support_astronomer.label(text="SA") }}</th>
+              <td>{{ form.support_astronomer }}</td>
+          </tr>
+          <tr>
+              <th>{{ form.program.label(text="Program ID") }}</th>
+              <td>{{ form.program }}</td>
+              <th>{{ form.observing_assistant.label(text="OA") }}</th>
+              <td>{{ form.observing_assistant }}</td>
+          </tr>
+          <tr>
+              <th>{{ form.weather.label(text="Weather") }}</th>
+              <td rowspan=2>{{ form.weather(rows=2, cols=22) }}</td>
+              {# <th>{{ form.observers.label }}</th> #}
+              {# <td>{{ form.observers }}</td> #}
+          </tr>
+          <tr>
+              <th></th>
+              <th>{{ form.data_directory.label }}</th>
+              <td>{{ form.data_directory(size=40) }}</td>
+          </tr>
+      </table>
+  </div>

@@ -1,0 +1,10 @@
+<div>
+  <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+    <thead>{% include "logs/_log_header.html" %}</thead>
+    <tbody>
+    {% for log in logs %}
+      {% include "logs/_log_row.html" %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

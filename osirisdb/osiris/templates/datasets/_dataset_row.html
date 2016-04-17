@@ -1,4 +1,4 @@
-    {% from "datasets/_archive.html" import dataset_archive_link %}
+{% from "datasets/_archive.html" import dataset_archive_link %}
 <tr>
     <td class='date'>
           {{ dataset_archive_link(dataset.date.year, dataset.date.month, dataset.date.day) }}
@@ -10,10 +10,12 @@
         <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.dataset_name }}</a>
     </td>
     <td class='name'>
-        {% for target in dataset.targets %}
-            {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
-        {% else %}
-        <form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/">
+        <div class="target-value">
+            {% for target in dataset.targets %}
+                {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
+            {% else %}
+        </div>
+        <form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/" class="target-update">
             {{ select_target_form.hidden_tag() }}
             {{ select_target_form.label }}{{ select_target_form.target() }}
             <input type="submit" value="Add">

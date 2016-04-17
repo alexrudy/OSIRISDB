@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+{% block title %}OSIRIS Log from {{ log.date }}{% endblock title %}
+{% block scripts %}
+<script src="/static/js/log.js" type="text/javascript" charset="utf-8"></script>
+{% endblock scripts %}
+{% block content %}
+<div id="title">
+  <h1>OSIRIS Log from {{ log.date }}</h1>
+</div>
+<div id="metadata" log-id="{{ log.id }}">
+  <form method="POST" action="{{ url_for('.log', id=log.id)}}">
+      {% include "logs/_log_form.html" %}
+      <div class="float-clear">
+          <input type="submit" value="Save">
+      </div>
+</div>
+<div id="logbody">
+    <table>
+        <thead>
+            <tr>
+            <th></th>
+            <th class="dataset-number">Dataset #</th>
+            <th class="frame-number">Frames</th>
+            <th>Object Name</th>
+            <th>PA</th>
+            <th>Filters</th>
+            <th>Scale</th>
+            <th>ITime</th>
+            <th>Coadds</th>
+            <th>Repeats</th>
+            <th colspan=2>Dithers</th>
+            <th colspan=2>AO</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>used</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>obj</th>
+                <th>sky</th>
+                <th>rate</th>
+                <th>gain</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set parent_form = form %}
+            {% for row in parent_form.rows %}
+                {% set form = row.form %}
+                {% include "logs/_row.html" %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </form>
+    
+</div>
+{% endblock content %}

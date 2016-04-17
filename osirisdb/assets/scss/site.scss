@@ -7,6 +7,22 @@ article {
 #article {
 }
 
+#logbody {
+    .frame-number {
+        width: 10px;
+    }
+    .filled {
+        background: #999;
+    }
+    table {
+        border: 1;
+        border-color: #fff;
+    }
+}
+input[type=number]{
+    width: 80px;
+}
+
 #name {
     
     text-decoration: underline;
@@ -17,6 +33,13 @@ article {
     .py {
         color: white;
     }
+}
+
+.float-left {
+    float: left;
+}
+.float-clear {
+    clear: both;
 }
 
 #navigation-bar {

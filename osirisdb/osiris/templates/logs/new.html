@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block title %}New Log{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>New OSIRIS Log</h1>
+</div>
+<div id="form">
+  <form method="POST" action="/osiris/logs/new/">
+      {% if form.errors %}
+      <p>There were errors in your form:</p>
+          <ul class="errors">
+              {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                  {% for error in field_errors %}
+                      <li>{{ form[field_name].label }}: {{ error }}</li>
+                  {% endfor %}
+              {% endfor %}
+          </ul>
+      {% endif %}
+      {% include "logs/_log_form.html" %}
+      <div class="float-clear">
+          <input type="submit" value="Create">
+      </div>
+  </form>
+</div>
+{% endblock content %}

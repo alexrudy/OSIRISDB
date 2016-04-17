@@ -44,6 +44,12 @@ def archive(year, month=None, day=None):
     datasets = Dataset.query.filter(Dataset.date.between(start_date, end_date)).all()
     return render_template("datasets/archive.html", datasets=datasets, year=year, month=month, day=day)
 
+@api.route("datasets/<int:id>/target.js")
+def get_target_dataset_js(id):
+    """Get the JS form for updating a target."""
+    dataset = Dataset.query.get(id)
+    return render_template("target.js", dataset=dataset)
+
 @api.route("datasets/<int:id>/target/", methods=('POST',))
 def set_dataset_target(id):
     """Set the target for a particular dataset."""

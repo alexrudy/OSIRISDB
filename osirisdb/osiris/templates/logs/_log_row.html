@@ -1,0 +1,14 @@
+<tr>
+    <td>{{ log.date }}</td>
+    <td>{{ log.program }}</td>
+    <td>
+        {% for observer in log.observers %}
+            {% if not loop.first %}, {% endif %}
+            {{ observer.name }}
+        {% endfor %}
+    </td>
+    <td>{{ log.support_astronomer.name }}</td>
+    <td>{{ log.observing_assistant.name }}</td>
+    <td>{{ log.weather|truncate(50) }}</td>
+    <td><a href="{{ url_for('.log', id=log.id)}}">View</a></td>
+</tr>
