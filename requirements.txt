@@ -15,3 +15,8 @@ flask-sqlalchemy
 flask-scss
 flask-wtf
 Flask-Script
+
+# Forms
+wtforms
+wtforms-alchemy
+wtforms-sqlalchemy
