@@ -6,6 +6,9 @@ Tools to handle FITS files.
 from sqlalchemy import Column
 from sqlalchemy.types import TypeDecorator, VARCHAR
 from astropy.io import fits
+from sqlalchemy import inspect
+
+from ..application import db
 
 __all__ = ['FHColumn', 'FHType']
 
@@ -41,4 +44,19 @@ class FHType(TypeDecorator):
         if value is not None:
             value = fits.Header.fromstring(value)
         return value
-        
+
+class FHMixin(db.Model):
+    """A base class for FITS-Header based data objects."""
+    
+    __abstract__ = True
+    
+    @classmethod
+    def parse_header(cls, header):
+        """Parse a FITS Header"""
+        attrs = {}
+        for name, col in inspect(cls).columns.items():
+            if hasattr(col, 'parse_header'):
+                attrs[name] = col.parse_header(header)
+        return attrs
+    
+    
