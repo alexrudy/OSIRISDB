@@ -58,7 +58,12 @@ input[type=number]{
             color: white;
         }
     }
-    
-    
-    
+}
+
+tbody tr th {
+    text-align: right;
+}
+
+form input.rowspan-2 {
+    height: 2.2em;
 }
