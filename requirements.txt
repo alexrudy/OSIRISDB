@@ -15,8 +15,17 @@ flask-sqlalchemy
 flask-scss
 flask-wtf
 Flask-Script
+flask-shell-ipython
 
 # Forms
 wtforms
 wtforms-alchemy
 wtforms-sqlalchemy
+
+# Other goodies
+attrs
+click
+
+# Vizulaization
+seaborn
+WCSAxes
