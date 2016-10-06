@@ -1,11 +1,11 @@
 <div id="navigation-bar" class='clearfix'>
   <div id="name">
-    <span class='telem'>OSIRIS</span><span class='py'>DB</span>
+    <a href="{{ url_for('home') }}"><span class='telem'>OSIRIS</span><span class='py'>DB</span></a>
   </div>
   <div id="home">
-    <a href='/targets/'>Targets</a>
+    <a href="{{ url_for('target') }}">Targets</a>
   </div>
   <div>
-    <a href='/osiris/'>OSIRIS</a>
+    <a href="{{ url_for('osiris.home') }}">OSIRIS</a>
   </div>
 </div>

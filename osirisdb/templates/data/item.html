@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block title %}DataFile {{ datafile.basename }}{% endblock title %}
+{% block content %}
+<div id="title">
+  <h1>DataFile {{ datafile.basename }}</h1>
+  <p> on {{ datafile.host }} </p>
+  </div>
+<div>
+  <div class="download">
+      <a href="{{ url_for('download_datafile', identifier=datafile.id) }}">Download this file</a>
+  </div>
+  <div class='preview'>
+      <h2>Preview</h2>
+      <img src="{{ url_for('get_datafile_preview',  identifier=datafile.id) }}", style="width:100%; max-width:600px;">
+  </div>
+</div>
+{% endblock content %}

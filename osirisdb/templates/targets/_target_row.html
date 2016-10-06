@@ -2,14 +2,16 @@
   <td class='name'>
     <a href="{{ url_for('.target', identifier=target.id)}}">{{ target.name }}</a>
   </td>
-  <td class="dt-center">
+  <td class="dt-right">
       {% if target.simbad[0] %}
-          {{ target.simbad[0].coordinates.to_string('hmsdms', sep=":") }}
+          {{ target.simbad[0].coordinates.to_string('hmsdms', sep=":") }} from SIMBAD
+      {% elif target.ned[0] %}
+          {{ target.ned[0].coordinates.to_string('hmsdms', sep=':') }} from NED
       {% endif %}
   </td>
   <td class="dt-right">
       {% if target.ned[0] %}
-      {{ target.ned[0].redshift }}
+      {{ "%.4f"|format(target.ned[0].redshift) }}
       {% endif %}
   </td>
 </tr>

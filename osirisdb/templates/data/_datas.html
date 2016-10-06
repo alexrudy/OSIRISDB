@@ -1,0 +1,10 @@
+<div class='datafile-table' style="width: 800px">
+  <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+    <thead>{% include "data/_data_header.html" %}</thead>
+    <tbody>
+    {% for datafile in datafiles %}
+      {% include "data/_data_row.html" %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

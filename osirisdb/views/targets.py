@@ -6,7 +6,7 @@ from ..application import app, db
 from ..model import Target, NEDInfo, SIMBADInfo
 from .base import ViewBase
 
-from flask_wtf import Form
+from flask_wtf import FlaskForm as Form
 from wtforms import StringField, SelectField, HiddenField, validators
 from werkzeug.local import LocalProxy
 __all__ = ['TargetView']
@@ -21,12 +21,20 @@ class TargetBase(ViewBase):
 class TargetView(TargetBase, MethodView):
     """Method view to render the dataset."""
     
-    def get(self, identifier=None):
+    def get(self, identifier=None, page=None):
         """Get the dataset view."""
         if identifier is None:
             form = TargetForm()
             return render_template("targets/list.html", targets=self.get_many(), form=form)
         return render_template("targets/item.html", target=self.get_one(identifier), ned_form=AddInfoForm(), simbad_form=AddInfoForm())
+    
+    def delete(self, identifier=None):
+        """Delete a target"""
+        t = Target.query.get(identifier)
+        if t:
+            db.session.expunge(t)
+        db.session.commit()
+        return redirect("/targets/")
 
 class NEDInfoView(ViewBase, MethodView):
     
@@ -73,6 +81,7 @@ class SelectTarget(Form):
     """Select a new target form"""
     
     prev = HiddenField()
+    new_targetname = HiddenField()
     target = SelectField("Target", default="", coerce=int)
     
     def __init__(self):
@@ -94,7 +103,7 @@ class AddInfoForm(Form):
 def get_select_target_form():
     """Get the select target form."""
     if not hasattr(g, "_select_target_form"):
-        form = g._select_target_form = SelectTarget()
+        form = SelectTarget()
     else:
         form = g._select_target_form
     return form
