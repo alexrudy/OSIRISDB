@@ -29,12 +29,16 @@
       <tbody>
       {% for datafile in frame.dataframes %}
           <tr>
-              <td>{{ datafile.basename }}</td>
+              <td><a href="{{url_for('datafile', identifier=datafile.id) }}">{{ datafile.basename }}</a></td>
               <td>{{ datafile.host }}</td>
-              
           </tr>
       {% endfor %}
   </tbody>
   </table>
+  {% if frame.dataframes|length %}
+      <div class='preview'>
+          <img src="{{ url_for('get_datafile_preview',  identifier=frame.dataframes[0].id) }}", style="width:100%; max-width:600px;">
+      </div>
+  {% endif %}
 </div>
 {% endblock content %}

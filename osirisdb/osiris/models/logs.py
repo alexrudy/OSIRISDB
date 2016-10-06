@@ -4,7 +4,7 @@ import datetime
 
 from sqlalchemy import Column, Text, String, Integer, Date, DateTime, Float, Boolean, ForeignKey
 from sqlalchemy import inspect
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declared_attr
 
 import astropy.units as u
@@ -40,6 +40,7 @@ class OSIRISLogRow(Base):
     """A single row entry in an OSIRIS log."""
     __abstract__ = True
     created = Column(DateTime, doc="When this log row was created.", default=datetime.datetime.now)
+    number = Column(Integer, doc="Row number.")
         
 class OSIRISLogNote(OSIRISLogRow):
     """A note entry."""
@@ -65,7 +66,7 @@ class OSIRISLogRowSpec(Base):
     """Row items which relate to the spectrograph."""
     
     log_dataset_id = Column(Integer, ForeignKey("osirislogdataset.id"))
-    log_dataset = relationship("OSIRISLogDataset", backref='spec', uselist=False)
+    log_dataset = relationship("OSIRISLogDataset", backref=backref('spectrograph', uselist=False), uselist=False)
     
     number_of_frames = Column(Integer)
     filter = Column(String)
@@ -78,7 +79,7 @@ class OSIRISLogRowSpec(Base):
 class OSIRISLogRowImager(Base):
     """Row items which relate to the imager."""
     log_dataset_id = Column(Integer, ForeignKey("osirislogdataset.id"))
-    log_dataset = relationship("OSIRISLogDataset", backref='imag', uselist=False)
+    log_dataset = relationship("OSIRISLogDataset", backref=backref('imager', uselist=False), uselist=False)
     
     number_of_frames = Column(Integer)
     filter = Column(String)

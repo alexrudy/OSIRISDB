@@ -3,11 +3,13 @@
 Tools to import FITS files from their headers.
 """
 
+import click
+
 from astropy.io import fits
 
 from .models import Dataset, SpecFrame
 from ..model import DataFile
-from ..application import cli, db
+from ..application import app, db
 
 __all__ = ['import_osiris_fits', 'oimport']
 
@@ -45,10 +47,19 @@ def import_osiris_fits(filename, session):
         session.add(dataset)
         
     
-@cli.option('files', nargs="+", type=str)
+@app.cli.command()
+@click.argument('files', nargs=-1, type=str)
 def oimport(files):
     """Import OSIRIS data files."""
     for filename in files:
-        print("Importing '{0:s}'".format(filename))
+        click.echo("Importing '{0:s}'".format(filename))
         import_osiris_fits(filename, db.session)
     db.session.commit()
+    
+@app.cli.command()
+def odelete():
+    """Delete OSIRIS data frames from databaes"""
+    db.session.query(Dataset).delete()
+    db.session.query(SpecFrame).delete()
+    db.session.commit()
+    

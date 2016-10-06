@@ -7,7 +7,6 @@
 <div data-collapse>
     <h2>Datasets</h2>
     <div id="datasets">
-      {% include "datasets/_datasets.html" %}
     </div>
     <h2>Observing Logs</h2>
     <div id="logs">
@@ -15,3 +14,21 @@
     </div>
 </div>
 {% endblock content %}
+{% block scripts %}
+    <script src="/static/js/targets.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.get("{{ url_for('.dataset_raw', page=1) }}", function(data){
+                var target = $("div#datasets")
+                target.html(data)
+                target.find(".datatables").each(function(){
+                    $(this).dataTable({
+                        paging: false,
+                        autoWidth: false,
+                        info: false
+                    })
+                })
+            })
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,13 @@
+<form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/" class="target-update">
+    {% set form = dataset._add_name_to_target_choices(select_target_form) %}
+    {{ form.hidden_tag() }}
+    {{ form.label }}{{ form.target() }}
+    <input type="submit" value="Set">
+</form>
+{% if dataset.targets|length > 1 %}
+<div class="target-value">
+    {% for target in dataset.targets %}
+        {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
+    {% endfor %}
+</div>    
+{% endif %}

@@ -8,19 +8,13 @@
     </td>
     <td class='name'>
         <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.dataset_name }}</a>
+        {% set object_name = dataset.object_name() %}
+        {%- if object_name and object_name != dataset.dataset_name %}
+            for {{ object_name }}
+        {%- endif %}
     </td>
     <td class='name'>
-        <div class="target-value">
-            {% for target in dataset.targets %}
-                {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
-            {% else %}
-        </div>
-        <form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/" class="target-update">
-            {{ select_target_form.hidden_tag() }}
-            {{ select_target_form.label }}{{ select_target_form.target() }}
-            <input type="submit" value="Add">
-        </form>
-        {% endfor %}
+        {% include "datasets/_dataset_row_target.html" %}
     </td>
     <td>
         {% for group in dataset.sframes|groupby('filter') %}
@@ -33,6 +27,6 @@
         {% endfor %}
     </td>
     <td>
-        {{ "%.1f"|format((dataset.sframes|sum('integration_time'))) }}s (n={{dataset.sframes|count}})
+        {{ "%.1f"|format((dataset.sframes|sum('integration_time')).value) }}s (n={{dataset.sframes|count}})
     </td>
 </tr>

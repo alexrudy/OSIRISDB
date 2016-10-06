@@ -1,12 +1,11 @@
-    {{ form.hidden_tag() }}
-    {{ form.spectrograph.hidden_tag() }}
-    {{ form.imager.hidden_tag() }}
 <tr>
-  <th>Spec</th>
-  <td rowspan=2 class='dataset-number'>{{ form.dataset_number(size=2) }}</td>
+  <th>Spec:
+  {{ form.spectrograph.hidden_tag() }}</th>
+  
+  <td rowspan=2 class='dataset-number'>{{ form.dataset_number(size=2, class='rowspan-2') }}</td>
   <td class='frame-number'>{{ form.spectrograph.number_of_frames(size=2) }}</td>
-  <td rowspan=2>{{ form.object_name }}</td>
-  <td rowspan=2>{{ form.pa_used(size=2) }}</td>
+  <td rowspan=2>{{ form.object_name(class='rowspan-2') }}</td>
+  <td rowspan=2>{{ form.pa_used(size=2, class='rowspan-2') }}</td>
   <td>{{ form.spectrograph.filter(size=10) }}</td>
   <td>{{ form.spectrograph.scale(size=2) }}</td>
   <td>{{ form.spectrograph.integration_time(size=2) }}</td>
@@ -14,13 +13,12 @@
   <td class='filled'></td>
   <td>{{ form.imager.dither_object }}</td>
   <td>{{ form.imager.dither_sky }}</td>
-  <td rowspan=2>{{ form.ao_rate(size=2) }}</td>
-  <td rowspan=2>{{ form.ao_gain(size=2) }}</td>
+  <td rowspan=2>{{ form.ao_rate(size=2, class='rowspan-2') }}</td>
+  <td rowspan=2>{{ form.ao_gain(size=2, class='rowspan-2') }}</td>
   
 </tr>
 <tr>
-    <th>Imager</th>
-    
+    <th>Imager:{{ form.imager.hidden_tag() }}</th>
     <td class='frame-number'>{{ form.imager.number_of_frames(size=2) }} </td>
     
     <td>{{ form.imager.filter(size=10) }}</td>
@@ -32,8 +30,8 @@
     <td>{{ form.imager.dither_sky }}</td>
 </tr>
 <tr>
-    <th>UT Time: </th>
-    <td>{{ form.ut_start_time(size=8) }}</td>
+    <th>{{ form.hidden_tag() }}UT Time:</th>
+    <td>{{ form.ut_start_time(size=8	) }}</td>
     <th>Comments:</th>
     <td colspan=10>{{ form.comments(rows=1, cols=120) }}</td>
 </tr>

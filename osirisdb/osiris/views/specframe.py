@@ -21,7 +21,7 @@ class SpecFrameBase(ViewBase):
 class SpecFrameView(SpecFrameBase, MethodView):
     """Method view to render the dataset."""
     
-    def get(self, identifier=None):
+    def get(self, identifier=None, page=None):
         """Get the dataset view."""
         if identifier is None:
             return render_template("frames/list.html", frames=self.get_many())

@@ -16,7 +16,7 @@
         <pre style="display: inline">{{ frame.object_name }}</pre>
     </td>
     <td class="exposure">
-        {{ "%.0f"|format(frame.integration_time) }}s
+        {{ "%.0f"|format(frame.integration_time.value) }}s
         {% if frame.coadds > 1 %}
         &times; {{ frame.coadds }}
         {% endif %}
@@ -51,6 +51,8 @@
             <input type="submit" value="+">
         </form>
         {%- endif %}
-
+    </td>
+    <td>
+        <a href="{{ url_for('osiris.specframe', identifier=frame.id) }}">view</a>
     </td>
 </tr>

@@ -12,7 +12,7 @@
     <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
       <thead>{% include "frames/_frame_header.html" %}</thead>
       <tbody>
-    {% for dataset in datasets %}
+    {% for dataset in datasets.items %}
         {% for frame in dataset.sframes %}
             {% include "frames/_frame_row.html" %}
         {% endfor %}
@@ -21,3 +21,6 @@
     </table>
 </div>
 {% endblock content %}
+{% block scripts %}
+    <script src="/static/js/targets.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
