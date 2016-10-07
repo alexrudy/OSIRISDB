@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, redirect, request, g
+from flask import render_template, redirect, request, g, flash
 from flask.views import MethodView
 from ..application import app, db
 from ..model import Target, NEDInfo, SIMBADInfo
 from .base import ViewBase
 
+from astroquery.exceptions import RemoteServiceError
 from flask_wtf import FlaskForm as Form
 from wtforms import StringField, SelectField, HiddenField, validators
 from werkzeug.local import LocalProxy
@@ -137,9 +138,14 @@ def add_NEDinfo(id):
     form = AddInfoForm()
     if form.validate_on_submit():
         target = Target.query.get(id)
-        ni = NEDInfo.from_query(target, form.name.data)
-        db.session.add(ni)
-        db.session.commit()
+        try:
+            ni = NEDInfo.from_query(target, form.name.data)
+        except RemoteServiceError as e:
+            flash("NED can't resolve name {0}".format(form.name.data))
+            app.logger.exception("NED Resolution")
+        else:
+            db.session.add(ni)
+            db.session.commit()
         redirect(form.prev.data)
     return redirect(form.prev.data)
     
@@ -150,8 +156,16 @@ def add_SIMBADinfo(id):
     form = AddInfoForm()
     if form.validate_on_submit():
         target = Target.query.get(id)
-        si = SIMBADInfo.from_query(target, form.name.data)
-        db.session.add(si)
-        db.session.commit()
+        try:
+            si = SIMBADInfo.from_query(target, form.name.data)
+        except RemoteServiceError as e:
+            flash("SIMBAD can't resolve name {0}".format(form.name.data))
+            app.logger.exception("SIMBAD Resolution")
+        except TypeError as e:
+            if "subscriptable" in str(e):
+                flash("SIMBAD can't resolve name {0}".format(form.name.data))
+        else:
+            db.session.add(si)
+            db.session.commit()
         redirect(form.prev.data)
     return redirect(form.prev.data)

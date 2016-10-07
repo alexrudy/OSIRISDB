@@ -37,6 +37,17 @@
         
         <!-- Add your site or application content here -->
         <article>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              <div class='flashes'>
+                <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>                  
+              </div>
+              {% endif %}
+            {% endwith %}
           <div id="article">
         {% block content %}
         
