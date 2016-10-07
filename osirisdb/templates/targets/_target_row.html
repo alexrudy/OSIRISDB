@@ -1,17 +1,26 @@
 <tr>
+  {% with target = item %}
   <td class='name'>
     <a href="{{ url_for('.target', identifier=target.id)}}">{{ target.name }}</a>
   </td>
   <td class="dt-right">
+      {% with %}
       {% if target.simbad[0] %}
-          {{ target.simbad[0].coordinates.to_string('hmsdms', sep=":") }} from SIMBAD
+          {% set coordinates = target.simbad[0].coordinates %}
+          {% set attribution = "from SIMBAD" %}
       {% elif target.ned[0] %}
-          {{ target.ned[0].coordinates.to_string('hmsdms', sep=':') }} from NED
+          {% set coordinates = target.ned[0].coordinates %}
+          {% set attribution = "from NED" %}
       {% endif %}
+      {% if coordinates %}
+          <span><pre style='display:inline;'>{{ coordinates.to_string('hmsdms', sep=':', precision=3) }}</pre> {{ attribution }}</span>
+      {% endif %}
+      {% endwith %}
   </td>
   <td class="dt-right">
       {% if target.ned[0] %}
       {{ "%.4f"|format(target.ned[0].redshift) }}
       {% endif %}
   </td>
+  {% endwith %}
 </tr>

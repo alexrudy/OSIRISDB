@@ -2,7 +2,7 @@
 
 import datetime
 
-from copy import copy
+from copy import copy, deepcopy
 
 from sqlalchemy import Column, Text, String, Integer, Date, DateTime, Float, Boolean, ForeignKey
 from sqlalchemy import inspect
@@ -30,9 +30,17 @@ class Dataset(Base, FHMixin):
     def _add_name_to_target_choices(self, form):
         """Add name to target choices field"""
         form = copy(form)
+        form.target.choices.remove((-1, ""))
+        form.target.choices.insert(0, (-1, ""))
         for value, label in form.target.choices:
-            if label == self.dataset_name:
-                if len(self.targets) and all(target.name == label for target in self.targets):
+            if value == -2:
+                form.target.choices.remove((value, label))
+        
+        for value, label in form.target.choices:
+            if label == self.dataset_name or (all(target.name == label for target in self.targets) and len(self.targets)):
+                if len(self.targets):
+                    if value != -2:
+                        form.target.choices.remove((value, label))
                     form.target.choices.insert(0, (value, label))
                 break
         else:

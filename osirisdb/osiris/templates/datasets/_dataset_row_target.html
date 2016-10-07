@@ -1,13 +1,20 @@
-<form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/" class="target-update">
-    {% set form = dataset._add_name_to_target_choices(select_target_form) %}
-    {{ form.hidden_tag() }}
-    {{ form.label }}{{ form.target() }}
-    <input type="submit" value="Set">
-</form>
+{% if select_target_form %}
+    <form method="POST" action="{{ url_for('osiris.dataset', identifier=dataset.id) }}/target/" class="target-update">
+        {% set form = dataset._add_name_to_target_choices(select_target_form) %}
+        {{ form.hidden_tag() }}
+        {{ form.label }}{{ form.target() }}
+        <input type="submit" value="Set">
+    {% if dataset.targets|length == 1 %}
+        {% with target = dataset.targets[0] %}
+        <a href="{{ url_for('target', identifier=target.id) }}">view</a>
+        {% endwith %}
+    {% endif %}
+    </form>
+{% endif %}
 {% if dataset.targets|length > 1 %}
-<div class="target-value">
-    {% for target in dataset.targets %}
-        {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id)}}">{{ target.name }}</a>
-    {% endfor %}
-</div>    
+    <div class="target-value">
+        {% for target in dataset.targets %}
+            {% if not loop.first %}, {% endif %}<a href="{{ url_for('target', identifier=target.id) }}">{{ target.name }}</a>
+        {% endfor %}
+    </div>
 {% endif %}

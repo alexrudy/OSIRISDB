@@ -20,7 +20,7 @@ class DataFileViewBase(ViewBase):
 class DataFileView(DataFileViewBase, MethodView):
     """Method view to render the dataset."""
     
-    def get(self, identifier=None):
+    def get(self, identifier=None, page=None):
         """Get the dataset view."""
         if identifier is None:
             return render_template("data/list.html", datafiles=self.get_many())

@@ -104,7 +104,8 @@ class AddInfoForm(Form):
 def get_select_target_form():
     """Get the select target form."""
     if not hasattr(g, "_select_target_form"):
-        form = SelectTarget()
+        # form = SelectTarget()
+        form = g._select_target_form = SelectTarget()
     else:
         form = g._select_target_form
     return form

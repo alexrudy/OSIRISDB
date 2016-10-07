@@ -5,6 +5,7 @@ $(document).ready(function(){
         var target = form.attr('action')
         form.on('submit', function(event){
             var form = $(this)
+            form.find('input#prev').val('none')
             event.preventDefault()
             $.post(target, form.serialize()).done(function(){
                 $.get(target + "_row/", function(data) {

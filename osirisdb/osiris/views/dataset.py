@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask.views import MethodView
-from flask import render_template, redirect, g
+from flask import render_template, redirect, g, jsonify
 
 import datetime
 
@@ -81,7 +81,11 @@ def set_dataset_target(id):
             frame.target = None
             db.session.add(frame)
         db.session.commit()
-    return redirect(form.prev.data)
+    if form.prev.data:
+        return redirect(form.prev.data)
+    if target:
+        return jsonify({'name':target.name, 'id':target.id})
+    return jsonify("")
 
 @api.route("datasets/<int:id>/target/_row/", methods=('GET',))
 def get_dataset_row(id):

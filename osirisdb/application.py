@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import sys
+sys.setrecursionlimit(3000)
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_scss import Scss

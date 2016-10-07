@@ -1,32 +1,34 @@
 {% from "datasets/_archive.html" import dataset_archive_link %}
 <tr>
-    <td class='date'>
-          {{ dataset_archive_link(dataset.date.year, dataset.date.month, dataset.date.day) }}
-    </td>
-    <td class='number'>
-          <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.number }}</a>
-    </td>
-    <td class='name'>
-        <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.dataset_name }}</a>
-        {% set object_name = dataset.object_name() %}
-        {%- if object_name and object_name != dataset.dataset_name %}
-            for {{ object_name }}
-        {%- endif %}
-    </td>
-    <td class='name'>
-        {% include "datasets/_dataset_row_target.html" %}
-    </td>
-    <td>
-        {% for group in dataset.sframes|groupby('filter') %}
-            {% if not loop.first %}, {% endif %}{{ group.grouper }}
-        {% endfor %}
-    </td>
-    <td>
-        {% for group in dataset.sframes|groupby('scale') %}
-            {% if not loop.first %}, {% endif %}{{ group.grouper }}&quot;/px
-        {% endfor %}
-    </td>
-    <td>
-        {{ "%.1f"|format((dataset.sframes|sum('integration_time')).value) }}s (n={{dataset.sframes|count}})
-    </td>
+    {% with dataset = item %}
+        <td class='date'>
+              {{ dataset_archive_link(dataset.date.year, dataset.date.month, dataset.date.day) }}
+        </td>
+        <td class='number'>
+              <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.number }}</a>
+        </td>
+        <td class='name'>
+            <a href="{{ url_for('osiris.dataset', identifier=dataset.id) }}">{{ dataset.dataset_name }}</a>
+            {% set object_name = dataset.object_name() %}
+            {%- if object_name and object_name != dataset.dataset_name %}
+                for {{ object_name }}
+            {%- endif %}
+        </td>
+        <td class='name'>
+            {% include "datasets/_dataset_row_target.html" %}
+        </td>
+        <td>
+            {% for group in dataset.sframes|groupby('filter') %}
+                {% if not loop.first %}, {% endif %}{{ group.grouper }}
+            {% endfor %}
+        </td>
+        <td>
+            {% for group in dataset.sframes|groupby('scale') %}
+                {% if not loop.first %}, {% endif %}{{ group.grouper }}&quot;/px
+            {% endfor %}
+        </td>
+        <td>
+            {{ "%.1f"|format((dataset.sframes|sum('integration_time')).value) }}s (n={{dataset.sframes|count}})
+        </td>
+    {% endwith %}
 </tr>

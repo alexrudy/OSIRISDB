@@ -1,12 +1,6 @@
+{% from "_table.html" import render_table %}
 <div class='target-table' style="width: 800px">
-  <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
-    <thead>{% include "targets/_target_header.html" %}</thead>
-    <tbody>
-    {% for target in targets %}
-      {% include "targets/_target_row.html" %}
-    {% endfor %}
-    </tbody>
-  </table>
+    {{ render_table(targets, 'targets', 'targets/_target') }}
     {% if form %}
     <h3>Add a new target:</h3>
     <form method="POST" action="/targets/new/">

@@ -1,20 +1,12 @@
 {% from "_pagination.html" import render_pagination %}
+{% from "_table.html" import render_table with context %}
 <div class='target-table'>
     {% if datasets is iterable %}
         {% set items = datasets %}
+        {% set pagination = none %}
     {% else %}
-        {{ render_pagination(datasets, '.dataset') }}
         {% set items = datasets.items %}
+        {% set pagination = datasets %}
     {% endif %}
-  <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
-    <thead>{% include "datasets/_dataset_header.html" %}</thead>
-    <tbody>
-    {% for dataset in items %}
-      {% include "datasets/_dataset_row.html" %}
-    {% endfor %}
-    </tbody>
-  </table>
-    {% if not datasets is iterable %}
-        {{ render_pagination(datasets, '.dataset') }}
-    {% endif %}
+    {{ render_table(items, '.dataset', 'datasets/_dataset', pagination) }}
 </div>

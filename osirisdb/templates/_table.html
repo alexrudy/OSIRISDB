@@ -1,0 +1,17 @@
+{% from "_pagination.html" import render_pagination %}
+{% macro render_table(items, endpoint, template_path, pagination=none) %}
+{% if pagination %}
+    {{ render_pagination(pagination, endpoint) }}
+{% endif %}
+<table class='datatables display' border="0" cellspacing="5" cellpadding="5">
+    <thead>{% include template_path~"_header.html" %}</thead>
+    <tbody>
+        {% for item in items %}
+            {% include template_path~"_row.html" %}
+        {% endfor %}
+    </tbody>
+</table>
+{% if pagination %}
+    {{ render_pagination(pagination, endpoint) }}
+{% endif %}
+{% endmacro %}
