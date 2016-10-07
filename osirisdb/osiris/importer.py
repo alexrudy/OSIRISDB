@@ -53,7 +53,10 @@ def oimport(files):
     """Import OSIRIS data files."""
     for filename in files:
         click.echo("Importing '{0:s}'".format(filename))
-        import_osiris_fits(filename, db.session)
+        try:
+            import_osiris_fits(filename, db.session)
+        except Exception as e:
+            click.echo("Error: {0!r}".format(e))
     db.session.commit()
     
 @app.cli.command()
