@@ -9,6 +9,7 @@ from ..models import Dataset
 from ...views.targets import select_target_form
 from ...model.target import Target
 from ...views.base import ViewBase
+from ...views.archive import ArchiveView
 from ...application import db
 
 __all__ = ['DatasetView']
@@ -28,24 +29,8 @@ class DatasetView(DatasetBase, MethodView):
         if identifier is None:
             return render_template("datasets/list.html", datasets=self.get_paginate(page))
         return render_template("datasets/item.html", dataset=self.get_one(identifier))
-        
-@api.route('datasets/archive/<int:year>/<int:month>/<int:day>/', endpoint='dataset_archive')
-@api.route('datasets/archive/<int:year>/<int:month>/', endpoint='dataset_archive')
-@api.route('datasets/archive/<int:year>/', endpoint='dataset_archive')
-@api.route('datasets/archive/<int:year>/<int:month>/<int:day>/page/<int:page>/', endpoint='dataset_archive')
-@api.route('datasets/archive/<int:year>/<int:month>/page/<int:page>/', endpoint='dataset_archive')
-@api.route('datasets/archive/<int:year>/page/<int:page>/', endpoint='dataset_archive')
-def archive(year, month=None, day=None, page=None):
-    """Get the dataset view, by date."""
-    start_date = datetime.date(year, month or 1, day or 1)
-    if month is None:
-        end_date = datetime.date(year+1, 1, 1)
-    elif day is None:
-        end_date = datetime.date(year, month + 1, 1)
-    else:
-        end_date = start_date + datetime.timedelta(days=1)
-    datasets = Dataset.query.filter(Dataset.date.between(start_date, end_date)).paginate(page, per_page=100)
-    return render_template("datasets/archive.html", datasets=datasets, year=year, month=month, day=day)
+
+ArchiveView.register(api, 'dataset_archive', Dataset, 'datasets/', prefix='datasets/archive', modelcontextname='datasets')
 
 @api.route("datasets/page/<int:page>/raw")
 def dataset_raw(page=None):

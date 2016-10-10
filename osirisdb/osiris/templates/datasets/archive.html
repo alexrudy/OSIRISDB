@@ -4,10 +4,13 @@
 {% block content %}
 <div id="title">
   <h1><a href="{{ url_for('osiris.dataset') }}">Datasets</a> from {{ dataset_archive_link(year, month, day) }}</h1>
-      {% include "datasets/_datasets.html" %}
-      
 </div>
+<div id="datasets">
+    {% include "datasets/_datasets.html" %}
+</div>
+<div id="frame-title">
   <h1><a href="{{ url_for('osiris.specframe') }}">Frames</a> from {{ dataset_archive_link(year, month, day) }}</h1>
+</div>
 <div id="frames">
     <table class='datatables display' border="0" cellspacing="5" cellpadding="5">
       <thead>{% include "frames/_frame_header.html" %}</thead>
