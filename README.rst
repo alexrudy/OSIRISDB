@@ -26,3 +26,9 @@ To shutdown the twistd server::
     
     $ kill $(cat twistd.pid)
     
+
+To import OSIRIS data files, use::
+    
+    $ export FLASK_APP=osirisdb
+    $ flask oimport /path/to/my/osiris/fits/files/*.fits
+    
