@@ -3,7 +3,7 @@
   <td class='name'>
     <a href="{{ url_for('.target', identifier=target.id)}}">{{ target.name }}</a>
   </td>
-  <td class="dt-right">
+  <td class="dt-left">
       {% with %}
       {% if target.simbad[0] %}
           {% set coordinates = target.simbad[0].coordinates %}
@@ -13,7 +13,7 @@
           {% set attribution = "from NED" %}
       {% endif %}
       {% if coordinates %}
-          <span><pre style='display:inline;'>{{ coordinates.to_string('hmsdms', sep=':', precision=3) }}</pre> {{ attribution }}</span>
+          <span class='coordinates'><pre>{{ coordinates.to_string('hmsdms', sep=':', precision=3) }}</pre> {{ attribution }}</span>
       {% endif %}
       {% endwith %}
   </td>
